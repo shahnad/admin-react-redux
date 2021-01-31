@@ -2,18 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { ListItem, Collapse, List, makeStyles, MenuList } from '@material-ui/core';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import PeopleIcon from '@material-ui/icons/People';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import StoreIcon from '@material-ui/icons/Store';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import CategoryIcon from '@material-ui/icons/Category';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import StoreIcon from '@material-ui/icons/Store';
 import ListIcon from '@material-ui/icons/List';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import ReorderIcon from '@material-ui/icons/Reorder';
-
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 const useStyles = makeStyles((theme) => ({
  
@@ -21,17 +17,17 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(4),
   },
   list: {
-     '&:focus': {
-            backgroundColor: theme.palette.primary.main,
-            '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-                color: theme.palette.common.white,
-            },
-            '& .MuiListItemIcon-root': {
-                '& .MuiIconButton-root': {
-                    color: theme.palette.common.white,
-                }
-            }
-        },
+    //  '& .Mui-selected': {
+    //         backgroundColor: theme.palette.primary.main,
+    //         '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+    //             color: theme.palette.common.white,
+    //         },
+    //         '& .MuiListItemIcon-root': {
+    //             '& .MuiIconButton-root': {
+    //                 color: theme.palette.common.white,
+    //             }
+    //         }
+    //     },
   }
 }));
 
@@ -40,27 +36,28 @@ const MainListItems = (props) => {
   const classes = useStyles();
   const [menu, setMenu] = useState([])
   const [open, setOpen] = React.useState(false);
-
+  const [itemIndex, setitemIndex] = useState(-1)
 
   useEffect(() => {
     if (menu.length == 0) {
-
       setMenu(MenuList)
     }
   }, [menu])
 
 
-  const SelectPath = (path) => {
+  const SelectPath = (path,i) => {
     props.history.push(path)
+    setitemIndex(i)
   }
   const handleClick = () => {
     setOpen(!open);
   };
 
   return (
-    <div className={classes.list}>
+    <List className={classes.list}>
       <ListItem button  
-        onClick={() => SelectPath('/dashboard')} >
+        selected={itemIndex ===0}
+        onClick={() => SelectPath('/dashboard',0)} >
         <ListItemIcon>
           <DashboardIcon />
         </ListItemIcon>
@@ -76,21 +73,24 @@ const MainListItems = (props) => {
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItem button className={classes.nested}
-            onClick={() => SelectPath('/dashboard/hubs')}>
+              selected={itemIndex ===1}
+            onClick={() => SelectPath('/dashboard/hubs',1)}>
             <ListItemIcon>
               <SupervisorAccountIcon />
             </ListItemIcon>
             <ListItemText primary="Hub list" />
           </ListItem>
           <ListItem button className={classes.nested}
-            onClick={() => SelectPath('/dashboard/users')}>
+            selected={itemIndex ===2}
+            onClick={() => SelectPath('/dashboard/users',2)}>
             <ListItemIcon>
               <ListIcon />
             </ListItemIcon>
             <ListItemText primary="Users list" />
           </ListItem>
           <ListItem button className={classes.nested}
-            onClick={() => SelectPath('/dashboard/orders')}>
+            selected={itemIndex ===3}
+            onClick={() => SelectPath('/dashboard/orders',3)}>
             <ListItemIcon>
               <ReorderIcon />
             </ListItemIcon>
@@ -98,13 +98,15 @@ const MainListItems = (props) => {
           </ListItem>
         </List>
       </Collapse>
-      <ListItem button >
+      <ListItem button
+        selected={itemIndex ===4}
+        onClick={() => SelectPath('/dashboard/orders', 4)}>
         <ListItemIcon>
           <ShoppingCartIcon />
         </ListItemIcon>
         <ListItemText primary="Admin" />
       </ListItem>
-     </div>
+     </List>
   )
 }
 export default MainListItems;
