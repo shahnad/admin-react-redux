@@ -10,7 +10,8 @@ import {
     ListItemIcon,
     Avatar,
     withStyles,
-    ListItemText
+    ListItemText,
+    Box
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -22,13 +23,14 @@ import MailIcon from '@material-ui/icons/Mail';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import MainListItems from '../SideBar';
 import { useDispatch } from 'react-redux';
-import {UserLogout} from '../../services/auth'
+import { UserLogout } from '../../services/auth'
 import { useHistory } from 'react-router-dom';
 import LockIcon from '@material-ui/icons/Lock';
 import NotificationPopups from '../../container/dashboard/components/Notification';
 import MessagePopups from '../Messages';
+import { HomeIcon, UserIcon } from '../Icons';
 
-const drawerWidth = 240;
+const drawerWidth = 65;
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -39,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     toolbar: {
-        paddingRight: 24, // keep right padding when drawer closed
+        paddingRight: 24,
     },
     toolbarIcon: {
         display: 'flex',
@@ -47,6 +49,15 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'flex-end',
         padding: '0 8px',
         ...theme.mixins.toolbar,
+        backgroundColor: '#003778',
+        '& .MuiIconButton-root': {
+            '& .MuiIconButton-label': {
+                '& svg': {
+                    height: 25,
+                    width: 25
+                }
+            }
+        }
     },
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
@@ -54,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
+        boxShadow: 'unset'
     },
     appBarShift: {
         marginLeft: drawerWidth,
@@ -115,6 +127,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'none',
         [theme.breakpoints.up('md')]: {
             display: 'flex',
+            alignItems: 'center'
         },
     },
     sectionMobile: {
@@ -127,38 +140,38 @@ const useStyles = makeStyles((theme) => ({
         width: 140,
         height: 40,
         '& .MuiAvatar-img': {
-            objectFit:'contain'
+            objectFit: 'contain'
         }
     }
 }));
 
 const StyledMenu = withStyles({
-  paper: {
+    paper: {
         border: '1px solid #d3d4d5',
         margin: 2,
-       width:300
-  },
+        width: 300
+    },
 })((props) => (
-  <Menu
-    elevation={0}
-    getContentAnchorEl={null}
-    anchorOrigin={{
-      vertical: 'bottom',
-      horizontal: 'center',
-    }}
-    transformOrigin={{
-      vertical: 'top',
-      horizontal: 'center',
-    }}
-    {...props}
-  />
+    <Menu
+        elevation={0}
+        getContentAnchorEl={null}
+        anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+        }}
+        transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+        }}
+        {...props}
+    />
 ));
 
 const StyledMenuItem = withStyles((theme) => ({
-  root: {
-      color:'black',
+    root: {
+        color: 'black',
         marginTop: 2,
-       '&:focus': {
+        '&:focus': {
             backgroundColor: theme.palette.primary.main,
             '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
                 color: theme.palette.common.white,
@@ -169,11 +182,11 @@ const StyledMenuItem = withStyles((theme) => ({
                 }
             }
         },
-  },
+    },
 }))(MenuItem);
 
 export default function Appbar(props) {
- 
+
     let history = useHistory()
     const dispatch = useDispatch()
     const classes = useStyles();
@@ -204,27 +217,26 @@ export default function Appbar(props) {
     };
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
-       <StyledMenu
-        id="customized-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleMenuClose}
-      >
-        <StyledMenuItem>
-          <ListItemIcon>
-            <AccountCircle fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="Profile" />
+        <StyledMenu
+            id="customized-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleMenuClose}
+        >
+            <StyledMenuItem>
+                <ListItemIcon>
+                    <AccountCircle fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary="Profile" />
             </StyledMenuItem>
-            {/* {localStorage.clear(); history.push('/auth/login')} */}
-            <StyledMenuItem onClick={() => { dispatch(UserLogout()); history.push('/auth/login')}}>
-          <ListItemIcon>
-            <LockIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="Logout" />
-        </StyledMenuItem>
-       </StyledMenu>
+            <StyledMenuItem onClick={() => { dispatch(UserLogout()); history.push('/auth/login') }}>
+                <ListItemIcon>
+                    <LockIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary="Logout" />
+            </StyledMenuItem>
+        </StyledMenu>
     );
     const mobileMenuId = 'primary-search-account-menu-mobile';
     const renderMobileMenu = (
@@ -236,7 +248,7 @@ export default function Appbar(props) {
             transformOrigin={{ vertical: 'top', horizontal: 'right' }}
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}>
-            <MenuItem onClick={()=>history.push('/dashboard/messages')}>
+            <MenuItem onClick={() => history.push('/dashboard/messages')}>
                 <IconButton aria-label="show 4 new mails" color="inherit">
                     <Badge badgeContent={4} color="secondary">
                         <MailIcon />
@@ -244,7 +256,7 @@ export default function Appbar(props) {
                 </IconButton>
                 <p>Messages</p>
             </MenuItem>
-            <MenuItem onClick={()=>history.push('/dashboard/notifications')}>
+            <MenuItem onClick={() => history.push('/dashboard/notifications')}>
                 <IconButton aria-label="show 11 new notifications" color="inherit">
                     <Badge badgeContent={11} color="secondary">
                         <NotificationsIcon />
@@ -268,10 +280,10 @@ export default function Appbar(props) {
     return (
         <div className={classes.root}>
             <CssBaseline />
-            <AppBar position="absolute"
+            <AppBar position="absolute" color="transparent"
                 className={clsx(classes.appBar, open && classes.appBarShift)}>
                 <Toolbar className={classes.toolbar}>
-                  <IconButton
+                    <IconButton
                         edge="start"
                         color="inherit"
                         aria-label="open drawer"
@@ -281,16 +293,23 @@ export default function Appbar(props) {
                         <MenuIcon />
                     </IconButton>
                     <Typography
-                        component="h1"
-                        variant="h6"
+                        variant="caption"
                         color="inherit"
                         noWrap className={classes.title}>
-                        Dashboard
-                       </Typography>
+                        Manufacturer / Settings
+                    </Typography>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
-                        <MessagePopups {...props} history={history} />
-                           <NotificationPopups {...props}  history={history} />
+                        <Box display="flex" flexDirection="column">
+                            <Typography style={{ fontWeight: 700 }}
+                                variant="body1">
+                                Mrs. Jane Doe</Typography>
+                            <Typography style={{ color: '#442d2d9c' }}
+                                variant="body1">
+                                User Designation
+                            </Typography>
+                        </Box>
+
                         <IconButton
                             edge="end"
                             aria-label="account of current user"
@@ -299,7 +318,7 @@ export default function Appbar(props) {
                             onClick={handleProfileMenuOpen}
                             color="inherit"
                         >
-                            <AccountCircle />
+                            <UserIcon />
                         </IconButton>
 
                     </div>
@@ -325,19 +344,13 @@ export default function Appbar(props) {
                 }}
                 open={open}>
                 <div className={classes.toolbarIcon}>
-                    {/* <Avatar
-                        variant="square"
-                        alt="logo"
-                        src="https://www.zappfresh.com/images/self/zappfresh-logo.png"
-                        className={classes.logo}
-                       /> */}
-                    <IconButton onClick={handleDrawerClose}>
-                        <ChevronLeftIcon />
+                    <IconButton >
+                        <HomeIcon />
                     </IconButton>
                 </div>
                 <Divider />
-                <List >< MainListItems history={history}/></List>
-           </Drawer>
-      </div>
+                <List style={{ padding: 0 }} >< MainListItems history={history} /></List>
+            </Drawer>
+        </div >
     );
 }

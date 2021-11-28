@@ -31,6 +31,7 @@ function Copyright() {
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    width: '100%'
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
@@ -51,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 240,
   },
- 
+
 
 }));
 
@@ -63,8 +64,11 @@ export default function DashboardPage(props) {
     <div className={classes.root}>
       {isLoading && <Loader />}
       <CssBaseline />
-     
-    
+      <Grid container spacing={0}>
+        <Grid xs={12}>
+          ww
+        </Grid>
+      </Grid>
     </div>
   );
 }

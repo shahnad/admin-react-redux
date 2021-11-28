@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { Route, Switch, Redirect } from "react-router-dom";
-import { connect,useSelector } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { bindActionCreators } from 'redux'
 import * as  UserService from '../../services/user';
 import Loader from '../../components/Loader';
@@ -15,50 +15,51 @@ const MoreNotifications = React.lazy(() => import('./components/Notification/Mor
 const MoreMessages = React.lazy(() => import('../../components/Messages/MoreMessages'));
 
 const AdminContainer = (props) => {
-  const auth = useSelector(state => state.auth.authenticated)
+  // const auth = useSelector(state => state.auth.authenticated)
+  const auth = true
   return (
-   <Suspense fallback={<Loader />}>
-    <Dashboard>
-      <Switch>
-        <Route
-          exact
-          path={`${props.match.path}`}
-          render={() => auth?<DashboardPage {...props} />:''}
-        />
-        <Route
-          exact
-          path={`${props.match.path}/hubs`}
-          render={() => { return <HubLists {...props} /> }}
-        />
-        <Route
-          exact
-          path={`${props.match.path}/users`}
-          render={() => <UsersList {...props} />}
-        />
-        <Route
-          exact
-          path={`${props.match.path}/orders`}
-          render={() => <OrderList {...props} />}
-        />
-        <Route
-          exact
-          path={`${props.match.path}/notifications`}
-          render={() => <MoreNotifications {...props} />}
-        />
+    <Suspense fallback={<Loader />}>
+      <Dashboard>
+        <Switch>
           <Route
-          exact
-          path={`${props.match.path}/messages`}
-          render={() => <MoreMessages {...props} />}
-        />
-        <Route
-          exact
-          path={`${props.match.path}/*`}
-          render={() => <NotFound {...props} />} />
-        
+            exact
+            path={`${props.match.path}`}
+            render={() => auth ? <DashboardPage {...props} /> : ''}
+          />
+          <Route
+            exact
+            path={`${props.match.path}/hubs`}
+            render={() => { return <HubLists {...props} /> }}
+          />
+          <Route
+            exact
+            path={`${props.match.path}/users`}
+            render={() => <UsersList {...props} />}
+          />
+          <Route
+            exact
+            path={`${props.match.path}/orders`}
+            render={() => <OrderList {...props} />}
+          />
+          <Route
+            exact
+            path={`${props.match.path}/notifications`}
+            render={() => <MoreNotifications {...props} />}
+          />
+          <Route
+            exact
+            path={`${props.match.path}/messages`}
+            render={() => <MoreMessages {...props} />}
+          />
+          <Route
+            exact
+            path={`${props.match.path}/*`}
+            render={() => <NotFound {...props} />} />
 
-      </Switch>
+
+        </Switch>
       </Dashboard>
-      </Suspense>
+    </Suspense>
   )
 }
 

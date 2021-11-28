@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles, CssBaseline } from "@material-ui/core";
 import Appbar from "../../../components/Appbar";
+import FingerPrintComponent from "../../../components/FingerPrintComponent";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -12,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         height: "100vh",
         overflow: "auto",
+
     },
 
 }));
@@ -21,10 +23,15 @@ export default function Dashboard(props) {
     return (
         <div className={classes.root}>
             <CssBaseline />
-            <Appbar {...props}/>
+            <Appbar {...props} />
+
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
-                {props.children}
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <FingerPrintComponent {...props} />
+
+                    {props.children}
+                </div>
             </main>
         </div>
 
