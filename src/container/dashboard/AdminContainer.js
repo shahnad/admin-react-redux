@@ -5,14 +5,10 @@ import { bindActionCreators } from 'redux'
 import * as  UserService from '../../services/user';
 import Loader from '../../components/Loader';
 
+const Home = React.lazy(() => import('./components/Home'));
+const Settings = React.lazy(() => import('./components/Settings'));
 const Dashboard = React.lazy(() => import('../dashboard/components'));
-const DashboardPage = React.lazy(() => import('../dashboard/components/dashboardPage'));
-const HubLists = React.lazy(() => import('../dashboard/components/HubList'));
-const UsersList = React.lazy(() => import('../dashboard/components/users'));
-const OrderList = React.lazy(() => import('../dashboard/components/order'));
 const NotFound = React.lazy(() => import('../../components/NotFound'));
-const MoreNotifications = React.lazy(() => import('./components/Notification/MoreNotification'));
-const MoreMessages = React.lazy(() => import('../../components/Messages/MoreMessages'));
 
 const AdminContainer = (props) => {
   // const auth = useSelector(state => state.auth.authenticated)
@@ -24,33 +20,16 @@ const AdminContainer = (props) => {
           <Route
             exact
             path={`${props.match.path}`}
-            render={() => auth ? <DashboardPage {...props} /> : ''}
+            render={() => auth ? <Home {...props} /> : ''}
           />
+
           <Route
             exact
-            path={`${props.match.path}/hubs`}
-            render={() => { return <HubLists {...props} /> }}
+            path={`${props.match.path}/settings`}
+            render={() => auth ? <Settings {...props} /> : ''}
           />
-          <Route
-            exact
-            path={`${props.match.path}/users`}
-            render={() => <UsersList {...props} />}
-          />
-          <Route
-            exact
-            path={`${props.match.path}/orders`}
-            render={() => <OrderList {...props} />}
-          />
-          <Route
-            exact
-            path={`${props.match.path}/notifications`}
-            render={() => <MoreNotifications {...props} />}
-          />
-          <Route
-            exact
-            path={`${props.match.path}/messages`}
-            render={() => <MoreMessages {...props} />}
-          />
+
+
           <Route
             exact
             path={`${props.match.path}/*`}

@@ -26,8 +26,6 @@ import { useDispatch } from 'react-redux';
 import { UserLogout } from '../../services/auth'
 import { useHistory } from 'react-router-dom';
 import LockIcon from '@material-ui/icons/Lock';
-import NotificationPopups from '../../container/dashboard/components/Notification';
-import MessagePopups from '../Messages';
 import { HomeIcon, UserIcon } from '../Icons';
 
 const drawerWidth = 65;
@@ -256,7 +254,7 @@ export default function Appbar(props) {
                 </IconButton>
                 <p>Messages</p>
             </MenuItem>
-            <MenuItem onClick={() => history.push('/dashboard/notifications')}>
+            <MenuItem >
                 <IconButton aria-label="show 11 new notifications" color="inherit">
                     <Badge badgeContent={11} color="secondary">
                         <NotificationsIcon />

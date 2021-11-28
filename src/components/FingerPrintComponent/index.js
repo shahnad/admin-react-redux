@@ -1,11 +1,11 @@
 import React from 'react'
-import { IconButton, makeStyles } from "@material-ui/core";
+import { IconButton, makeStyles, Typography } from "@material-ui/core";
 import { FingerPrintIcon, FingerPrintIconBlack } from '../Icons';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         display: "flex",
-        margin: 30,
+        margin: "auto 30px",
         flexDirection: 'column',
 
     },
@@ -24,31 +24,52 @@ const useStyles = makeStyles((theme) => ({
         margin: '10px auto',
         '& .MuiIconButton-label': {
             '& svg': {
-                
+
                 '&:hover': {
                     color: 'white'
                 }
             }
         }
+    },
+    buttonContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        '& .MuiTypography-caption': {
+            textAlign: 'center',
+            fontSize: 11
+        }
     }
-
 }));
 export default function FingerPrintComponent(props) {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <IconButton size="large" variant="square" className={classes.select}>
-                <FingerPrintIcon />
-            </IconButton>
-            <IconButton size="large" variant="square" className={classes.icon}>
-                <FingerPrintIconBlack />
-            </IconButton>
-            <IconButton size="large" variant="square" className={classes.icon}>
-                <FingerPrintIconBlack />
-            </IconButton>
-            <IconButton size="large" variant="square" className={classes.icon}>
-                <FingerPrintIconBlack />
-            </IconButton>
+            <div className={classes.buttonContainer} >
+                <IconButton size="large" variant="square" className={classes.select}>
+                    <FingerPrintIcon />
+                </IconButton>
+                <Typography variant="caption">KYC</Typography>
+            </div>
+            <div className={classes.buttonContainer}>
+                <IconButton size="large" variant="square" className={classes.icon}>
+                    <FingerPrintIconBlack />
+                </IconButton>
+                <Typography variant="caption">Product
+                    Configuration</Typography>
+            </div>
+            <div className={classes.buttonContainer}>
+                <IconButton size="large" variant="square" className={classes.icon}>
+                    <FingerPrintIconBlack />
+                </IconButton>
+                <Typography variant="caption">Operations</Typography>
+            </div>
+            <div className={classes.buttonContainer}>
+                <IconButton size="large" variant="square" className={classes.icon}>
+                    <FingerPrintIconBlack />
+                </IconButton>
+                <Typography variant="caption">Progress
+                    Report</Typography>
+            </div>
         </div>
     )
 }
